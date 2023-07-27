@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import Country from './components/Country.tsx';
+import Countries from './components/Countries.tsx';
 import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
 	<React.StrictMode>
-		<Country />
+		<Countries />
 	</React.StrictMode>
 );

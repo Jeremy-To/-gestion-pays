@@ -3,7 +3,7 @@ import CountryForm from './CountryForm';
 import CountryTable from './CountryTable';
 import { Country } from '../interface/country';
 
-const Country: React.FC = () => {
+const Countries: React.FC = () => {
 	const [countries, setCountries] = useState<Country[]>([]);
 	const [seeForm, setSeeForm] = useState<boolean>(false);
 
@@ -66,4 +66,4 @@ const Country: React.FC = () => {
 	);
 };
 
-export default Country;
+export default Countries;
