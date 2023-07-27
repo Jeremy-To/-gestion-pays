@@ -2,10 +2,18 @@ import React, { useState } from 'react';
 import { Country } from '../interface/country';
 
 interface CountryFormProps {
-	onAddCountry: (country: Country) => void;
+	onAddCountry?: (country: Country) => void;
+	modifyCountry?: (index: number, updatedCountry: Country) => void;
+	modifiedIndex?: number | null;
+	setSeeModifyForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const CountryForm: React.FC<CountryFormProps> = ({ onAddCountry }) => {
+const CountryForm: React.FC<CountryFormProps> = ({
+	onAddCountry,
+	modifyCountry,
+	modifiedIndex,
+	setSeeModifyForm,
+}) => {
 	const [formData, setFormData] = useState<Country>({
 		name: '',
 		population: 0,
@@ -26,7 +34,12 @@ const CountryForm: React.FC<CountryFormProps> = ({ onAddCountry }) => {
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		onAddCountry(formData);
+
+		if (onAddCountry) {
+			onAddCountry(formData);
+		} else if (modifyCountry && modifiedIndex) {
+			modifyCountry(modifiedIndex, formData);
+		}
 		setFormData({
 			name: '',
 			population: 0,
@@ -34,6 +47,7 @@ const CountryForm: React.FC<CountryFormProps> = ({ onAddCountry }) => {
 			continent: '',
 			produit_intérieur_brut: 0,
 		});
+		setSeeModifyForm(false);
 	};
 
 	return (
@@ -93,7 +107,9 @@ const CountryForm: React.FC<CountryFormProps> = ({ onAddCountry }) => {
 					required
 				/>
 			</div>
-			<button type="submit">Ajouter le pays</button>
+			<button type="submit">
+				{onAddCountry ? 'Ajouter un pays' : 'Modifier le pays'}
+			</button>
 		</form>
 	);
 };
