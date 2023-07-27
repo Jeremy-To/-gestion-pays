@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Country } from '../interface/country';
 import CountryForm from './CountryForm';
+import { useNavigate } from 'react-router-dom';
 
 interface CountryTableProps {
 	countries: Country[];
@@ -11,17 +12,22 @@ const CountryTable: React.FC<CountryTableProps> = ({
 	countries,
 	modifyCountry,
 }) => {
+	const navigate = useNavigate();
 	const [seeModifyForm, setSeeModifyForm] = useState<boolean>(false);
 	const [modifiedIndex, setModifyIndex] = useState<number | null>(null);
 
-	const handleClick = (index: number) => {
+	const handleClick = (
+		e: React.MouseEvent<HTMLButtonElement>,
+		index: number
+	) => {
+		e.stopPropagation();
 		setSeeModifyForm(true);
 		setModifyIndex(index);
 	};
 
-	const handleSeeMoreClick = (index: number) => {
-		const clickedCountry = countries[index];
-		console.log(clickedCountry);
+	const handleSeeMoreClick = (/* index: number */) => {
+		/* 		const clickedCountry = countries[index];
+		 */ navigate('/country/');
 	};
 
 	return (
@@ -39,14 +45,14 @@ const CountryTable: React.FC<CountryTableProps> = ({
 				</thead>
 				<tbody>
 					{countries.map((country, index) => (
-						<tr key={index} onClick={() => handleSeeMoreClick(index)}>
+						<tr key={index} onClick={() => handleSeeMoreClick(/* index */)}>
 							<td>{country.name}</td>
 							<td>{country.population}</td>
 							<td>{country.superficie}</td>
 							<td>{country.continent}</td>
 							<td>{country.produit_intérieur_brut}</td>
 							<td>
-								<button onClick={() => handleClick(index)}>here</button>
+								<button onClick={(e) => handleClick(e, index)}>here</button>
 							</td>
 						</tr>
 					))}

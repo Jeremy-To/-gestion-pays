@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CountryForm from './CountryForm';
 import CountryTable from './CountryTable';
 import { Country } from '../interface/country';
@@ -6,6 +6,17 @@ import { Country } from '../interface/country';
 const Countries: React.FC = () => {
 	const [countries, setCountries] = useState<Country[]>([]);
 	const [seeForm, setSeeForm] = useState<boolean>(false);
+
+	useEffect(() => {
+		const storedCountries = localStorage.getItem('countries');
+		if (storedCountries) {
+			setCountries(JSON.parse(storedCountries));
+		}
+	}, []);
+
+	useEffect(() => {
+		localStorage.setItem('countries', JSON.stringify(countries));
+	}, [countries]);
 
 	const handleAddCountry = (country: Country) => {
 		setCountries((prevCountries) => [...prevCountries, country]);
