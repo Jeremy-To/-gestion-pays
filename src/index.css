@@ -18,3 +18,41 @@
 	border-radius: 5px;
 	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
+/* Add some basic styling to the table */
+table {
+	width: 100%;
+	border-collapse: collapse;
+	border: 1px solid #ccc; /* Add border to the entire table */
+}
+
+/* Style the table header cells */
+th {
+	background-color: #f2f2f2;
+	text-align: left;
+	padding: 8px;
+	border: 1px solid #ccc; /* Add border to header cells */
+}
+
+/* Style the table data cells */
+td {
+	padding: 8px;
+	border: 1px solid #ccc; /* Add border to data cells */
+}
+
+/* Apply alternate background color to table rows */
+tr:nth-child(even) {
+	background-color: #f2f2f2;
+}
+
+/* Style the button inside the table cells */
+button {
+	padding: 6px 12px;
+	border: none;
+	border-radius: 8px;
+	cursor: pointer;
+}
+
+/* Hover effect for the button */
+button:hover {
+	background-color: #0056b3;
+}

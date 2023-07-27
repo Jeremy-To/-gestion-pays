@@ -2,19 +2,19 @@ import React, { useState } from 'react';
 import { Country } from '../interface/country';
 import CountryForm from './CountryForm';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectCountry } from '../state/countriesSlice';
 
 interface CountryTableProps {
-	countries: Country[];
 	modifyCountry: (index: number, updatedCountry: Country) => void;
 }
 
-const CountryTable: React.FC<CountryTableProps> = ({
-	countries,
-	modifyCountry,
-}) => {
+const CountryTable: React.FC<CountryTableProps> = ({ modifyCountry }) => {
 	const navigate = useNavigate();
+	const countries = useSelector(selectCountry);
+
 	const [seeModifyForm, setSeeModifyForm] = useState<boolean>(false);
-	const [modifiedIndex, setModifyIndex] = useState<number | null>(null);
+	const [modifiedIndex, setModifyIndex] = useState<number>();
 
 	const handleClick = (
 		e: React.MouseEvent<HTMLButtonElement>,
@@ -25,9 +25,8 @@ const CountryTable: React.FC<CountryTableProps> = ({
 		setModifyIndex(index);
 	};
 
-	const handleSeeMoreClick = (/* index: number */) => {
-		/* 		const clickedCountry = countries[index];
-		 */ navigate('/country/');
+	const handleSeeMoreClick = (countryId: number) => {
+		navigate(`/country/${countryId}`);
 	};
 
 	return (
@@ -40,19 +39,23 @@ const CountryTable: React.FC<CountryTableProps> = ({
 						<th>Superficie</th>
 						<th>Continent</th>
 						<th>Produit_intérieur_brut</th>
-						<th>action</th>
+						<th>image</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
-					{countries.map((country, index) => (
-						<tr key={index} onClick={() => handleSeeMoreClick(/* index */)}>
+					{countries.map((country: Country, index: number) => (
+						<tr key={index} onClick={() => handleSeeMoreClick(index)}>
 							<td>{country.name}</td>
 							<td>{country.population}</td>
 							<td>{country.superficie}</td>
 							<td>{country.continent}</td>
 							<td>{country.produit_intérieur_brut}</td>
 							<td>
-								<button onClick={(e) => handleClick(e, index)}>here</button>
+								<img src={country.image} alt={country.name} />
+							</td>
+							<td>
+								<button onClick={(e) => handleClick(e, index)}>éditer</button>
 							</td>
 						</tr>
 					))}

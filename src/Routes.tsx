@@ -9,7 +9,7 @@ const AppRoutes = () => {
 			element: <Countries />,
 		},
 		{
-			path: '/country',
+			path: '/country/:id',
 			element: <CountryDetails />,
 		},
 	]);

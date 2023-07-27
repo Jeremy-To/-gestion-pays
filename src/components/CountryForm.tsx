@@ -4,7 +4,7 @@ import { Country } from '../interface/country';
 interface CountryFormProps {
 	onAddCountry?: (country: Country) => void;
 	modifyCountry?: (index: number, updatedCountry: Country) => void;
-	modifiedIndex?: number | null;
+	modifiedIndex?: number;
 	setSeeModifyForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -20,7 +20,9 @@ const CountryForm: React.FC<CountryFormProps> = ({
 		superficie: 0,
 		continent: '',
 		produit_intérieur_brut: 0,
+		image: '',
 	});
+	const isIndex = modifiedIndex === 0 || modifiedIndex;
 
 	const handleChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -37,7 +39,7 @@ const CountryForm: React.FC<CountryFormProps> = ({
 
 		if (onAddCountry) {
 			onAddCountry(formData);
-		} else if (modifyCountry && modifiedIndex) {
+		} else if (modifyCountry && isIndex) {
 			modifyCountry(modifiedIndex, formData);
 		}
 		setFormData({
@@ -46,6 +48,7 @@ const CountryForm: React.FC<CountryFormProps> = ({
 			superficie: 0,
 			continent: '',
 			produit_intérieur_brut: 0,
+			image: '',
 		});
 		setSeeModifyForm(false);
 	};
@@ -103,6 +106,17 @@ const CountryForm: React.FC<CountryFormProps> = ({
 					id="produit_intérieur_brut"
 					name="produit_intérieur_brut"
 					value={formData.produit_intérieur_brut}
+					onChange={handleChange}
+					required
+				/>
+			</div>
+			<div>
+				<label htmlFor="image">image :</label>
+				<input
+					type="text"
+					id="image"
+					name="image"
+					value={formData.image}
 					onChange={handleChange}
 					required
 				/>

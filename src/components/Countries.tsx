@@ -1,39 +1,45 @@
-import React, { useEffect, useState } from 'react';
+import React, { /* useEffect, */ useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import CountryForm from './CountryForm';
 import CountryTable from './CountryTable';
 import { Country } from '../interface/country';
 
+import {
+	addCountry,
+	selectCountry,
+	updateCountry,
+} from '../state/countriesSlice';
+import CountryHeader from './CountryHeader';
+
 const Countries: React.FC = () => {
-	const [countries, setCountries] = useState<Country[]>([]);
+	const countries = useSelector(selectCountry);
+	const dispatch = useDispatch();
 	const [seeForm, setSeeForm] = useState<boolean>(false);
 
-	useEffect(() => {
+	/* 	useEffect(() => {
 		const storedCountries = localStorage.getItem('countries');
 		if (storedCountries) {
-			setCountries(JSON.parse(storedCountries));
+			dispatch(addCountry(JSON.parse(storedCountries)));
 		}
 	}, []);
 
 	useEffect(() => {
 		localStorage.setItem('countries', JSON.stringify(countries));
-	}, [countries]);
+	}, [countries]); */
 
 	const handleAddCountry = (country: Country) => {
-		setCountries((prevCountries) => [...prevCountries, country]);
+		dispatch(addCountry(country));
 	};
+
 	const modifyCountry = (index: number, updatedCountry: Country) => {
-		setCountries((prevCountries) => {
-			const updatedCountries = [...prevCountries];
-			updatedCountries[index] = updatedCountry;
-			return updatedCountries;
-		});
+		dispatch(updateCountry({ index, updatedCountry }));
 	};
 	const convertToCSV = () => {
 		let csvContent = 'data:text/csv;charset=utf-8,';
 		csvContent +=
 			'name,population,superficie,continent,produit_intérieur_brut\n';
 
-		countries.forEach((country) => {
+		countries.forEach((country: Country) => {
 			const {
 				name,
 				population,
@@ -54,23 +60,16 @@ const Countries: React.FC = () => {
 	};
 
 	return (
-		<div>
+		<div style={{ margin: '20px' }}>
 			{seeForm ? (
 				<CountryForm
 					onAddCountry={handleAddCountry}
 					setSeeModifyForm={setSeeForm}
 				/>
 			) : (
-				<div>
-					<button
-						onClick={() => {
-							setSeeForm(true);
-						}}
-					>
-						Ajouter un pays
-					</button>
-					<button onClick={convertToCSV}>Export to csv</button>
-					<CountryTable countries={countries} modifyCountry={modifyCountry} />
+				<div style={{ marginBottom: '100px' }}>
+					<CountryHeader convertToCSV={convertToCSV} setSeeForm={setSeeForm} />
+					<CountryTable modifyCountry={modifyCountry} />
 				</div>
 			)}
 		</div>

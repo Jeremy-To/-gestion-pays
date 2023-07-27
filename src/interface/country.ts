@@ -4,4 +4,5 @@ export interface Country {
 	superficie: number;
 	continent: string;
 	produit_intérieur_brut: number;
+	image: string;
 }
