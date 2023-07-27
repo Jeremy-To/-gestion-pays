@@ -14,20 +14,14 @@ const CountryHeader: React.FC<CountryFormProps> = ({
 }) => {
 	const navigate = useNavigate();
 	return (
-		<div
-			style={{
-				display: 'flex',
-				justifyContent: 'space-between',
-				margin: '20px',
-			}}
-		>
+		<div className="headerCountry">
 			{countryName ? <h2>{countryName}</h2> : <h2>Gestion des pays</h2>}
 			{countryName && (
 				<button onClick={() => navigate('/')}>Gestion des pays</button>
 			)}
 			{setSeeForm && convertToCSV && (
-				<div style={{ display: 'flex', gap: '10px', flexDirection: 'column' }}>
-					<div style={{ display: 'flex', gap: '10px' }}>
+				<div className="buttonContainer">
+					<div className="buttonDiv">
 						<button onClick={convertToCSV}>Exporter en csv</button>
 						<button>Rechercher</button>
 					</div>

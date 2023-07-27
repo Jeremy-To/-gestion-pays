@@ -60,14 +60,18 @@ const Countries: React.FC = () => {
 	};
 
 	return (
-		<div style={{ margin: '20px' }}>
+		<div className="box">
 			{seeForm ? (
-				<CountryForm
-					onAddCountry={handleAddCountry}
-					setSeeModifyForm={setSeeForm}
-				/>
+				<div className="modal-overlay">
+					<div className="modal-content">
+						<CountryForm
+							onAddCountry={handleAddCountry}
+							setSeeModifyForm={setSeeForm}
+						/>
+					</div>
+				</div>
 			) : (
-				<div style={{ marginBottom: '100px' }}>
+				<div>
 					<CountryHeader convertToCSV={convertToCSV} setSeeForm={setSeeForm} />
 					<CountryTable modifyCountry={modifyCountry} />
 				</div>
