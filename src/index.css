@@ -53,7 +53,7 @@ button:hover {
 }
 
 .box {
-	margin: 20px;s
+	margin: 20px;
 }
 
 .headerCountry {
@@ -62,11 +62,11 @@ button:hover {
 	margin: 20px;
 }
 .buttonContainer {
- 	display: flex;
-  gap: 10px;
-	flex-direction: column
+	display: flex;
+	gap: 10px;
+	flex-direction: column;
 }
 .buttonDiv {
 	display: flex;
- 	gap: 10px
+	gap: 10px;
 }
